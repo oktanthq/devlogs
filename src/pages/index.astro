@@ -5,7 +5,7 @@ import { developers } from "../data/developers";
 import { formatDateCompact } from "../utils/format";
 
 const devlogs = await getPublishedDevlogs();
-const [featured, ...archive] = devlogs;
+const [featured] = devlogs;
 
 const byline = (slug: string) => developers.find((d) => d.slug === slug)?.name ?? slug;
 ---
@@ -32,10 +32,10 @@ const byline = (slug: string) => developers.find((d) => d.slug === slug)?.name ?
     }
 
     {
-      archive.length > 0 && (
+      devlogs.length > 0 && (
         <section class="archive-section">
           <ul class="devlog-list">
-            {archive.map((entry) => (
+            {devlogs.map((entry) => (
               <li>
                 <a class="devlog-row" href={`/devlogs/${entry.id}/`}>
                   <span class="row-date">{formatDateCompact(entry.data.date)}</span>

@@ -231,13 +231,20 @@ svg {
   scroll-margin-top: 5rem;
 }
 
-.prose h2::before {
-  content: "";
-  display: block;
-  width: 1.75rem;
-  height: 3px;
-  background: var(--accent);
-  margin-bottom: 0.9rem;
+.prose h2::after {
+  content: "#";
+  display: inline-block;
+  margin-left: 0.45em;
+  color: var(--ink-fainter);
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.prose h2:hover::after,
+.prose h2:focus-within::after {
+  color: var(--accent);
 }
 
 .prose h3 {

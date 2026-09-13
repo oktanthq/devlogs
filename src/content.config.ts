@@ -22,7 +22,7 @@ const devlogs = defineCollection({
     description: z.string(),
     date: z.coerce.date(),
     author: z.enum(["abdullah", "harris", "moiz"]),
-    week: z.number().int().min(1).max(53),
+    week: z.number().int().min(0).max(53),
     milestone: z.string().regex(/^M[0-9]+$/i),
     status: z.enum(["draft", "published"]).default("published"),
     tags: z.array(z.string()).default([]),
