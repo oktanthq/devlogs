@@ -3,25 +3,43 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="404 — OKTANT" description="Page not found." path="/404/">
-  <section class="not-found container-narrow">
-    <h1>404</h1>
-    <p>
-      <a class="link" href="/">Devlogs →</a>
-    </p>
+  <section class="not-found container">
+    <p class="error-code mono">404</p>
+    <h1>Not found</h1>
+    <a class="home-link" href="/">Back to dev_logs <span aria-hidden="true">↗</span></a>
   </section>
 </BaseLayout>
 
 <style>
   .not-found {
-    padding-block: var(--space-9) var(--space-8);
+    min-height: 60vh;
+    padding-block: clamp(4rem, 12vw, 8rem) var(--space-8);
+  }
+
+  .error-code {
+    color: var(--accent);
+    font-size: clamp(6rem, 18vw, 12rem);
+    font-weight: 500;
+    letter-spacing: -0.09em;
+    line-height: 0.85;
   }
 
   .not-found h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800;
+    margin-top: 1.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 550;
+    letter-spacing: -0.05em;
   }
 
-  .not-found p {
-    margin-top: var(--space-5);
+  .home-link {
+    display: inline-block;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: color 0.15s ease;
+  }
+
+  .home-link:hover {
+    color: var(--accent);
   }
 </style>
