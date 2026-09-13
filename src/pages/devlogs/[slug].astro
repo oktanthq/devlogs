@@ -1,0 +1,26 @@
+---
+import DevlogLayout from "../../layouts/DevlogLayout.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("devlogs", ({ data }) => data.status === "published");
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<"devlogs"> };
+
+const all = (
+  await getCollection("devlogs", ({ data }) => data.status === "published")
+).sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+const index = all.findIndex((e) => e.id === entry.id);
+const prev = index > 0 ? all[index - 1] : undefined;
+const next = index < all.length - 1 ? all[index + 1] : undefined;
+---
+
+<DevlogLayout
+  entry={entry}
+  prev={prev ? { slug: prev.id, title: prev.data.title } : undefined}
+  next={next ? { slug: next.id, title: next.data.title } : undefined}
+/>

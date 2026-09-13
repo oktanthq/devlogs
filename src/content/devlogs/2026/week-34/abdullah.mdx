@@ -1,0 +1,29 @@
+---
+title: "The First Public Surface"
+description: "Oktant stops being an idea with structure: the data model goes live and the API skeleton gives every system something to point at."
+date: "2026-08-22"
+author: "abdullah"
+week: 34
+milestone: "M1"
+status: "published"
+tags:
+  - Data model
+  - API
+  - Foundation
+---
+
+Foundation milestone work has a strange quality: it produces the things that other work will spend months assuming. This week two of those things went from decisions to code.
+
+### The data model
+
+The entities we argued about for weeks now exist as types: project, environment, run, step, artifact, finding. Each carries an identity, a stable schema, and a version. Nothing in Oktant reads a raw blob and hopes — the model is the smallest common language everything speaks.
+
+### The API surface
+
+The skeleton is deliberately thin: the public API conveys structure, not functionality. A handful of read paths over the model, strict error shapes, and pagination conventions that were decided once and will not be re-litigated per endpoint.
+
+### What foundation buys
+
+The value of this week isn't the endpoints. It's that the parser, the IR, and the runtime can now define their contracts against something that exists. The first public surface turned three parallel conversations into one shared reference.
+
+Foundations are boring until suddenly nothing works without them. That inversion is the milestone's whole job.

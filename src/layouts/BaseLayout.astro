@@ -1,0 +1,171 @@
+---
+import "../styles/global.css";
+import Logo from "../components/Logo.astro";
+import { Moon } from "@lucide/astro";
+
+export interface Props {
+  title: string;
+  description?: string;
+  /** Canonical path, e.g. "/devlogs/week-1/". Defaults to the current URL. */
+  path?: string;
+  ogType?: "website" | "article";
+}
+
+const { title, description, path = Astro.url.pathname, ogType = "website" } = Astro.props;
+const canonical = new URL(path, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {
+      description && <meta name="description" content={description} />
+    }
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Oktant Devlogs" />
+    <meta property="og:title" content={title} />
+    {
+      description && <meta property="og:description" content={description} />
+    }
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="theme-color" content="#171717" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Oktant Devlogs" href="/rss.xml" />
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("oktant-theme");
+          var theme =
+            stored === "dark" || stored === "light"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (err) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header container">
+      <a class="brand" href="/" aria-label="Oktant devlogs home">
+        <Logo class="brand-logo" />
+      </a>
+      <span class="nav-title mono">dev_logs</span>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" title="Switch theme">
+        <Moon size={18} stroke-width={1.8} aria-hidden="true" />
+      </button>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+      const updateThemeToggle = () => {
+        const isDark = document.documentElement.dataset.theme === "dark";
+        toggle?.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+      };
+      updateThemeToggle();
+      toggle?.addEventListener("click", () => {
+        const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = nextTheme;
+        localStorage.setItem("oktant-theme", nextTheme);
+        updateThemeToggle();
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  main {
+    min-height: 60vh;
+    animation: page-enter 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .site-header {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+    padding-block: 1.5rem;
+  }
+
+  .brand {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .brand-logo {
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+
+  .nav-title {
+    justify-self: center;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    font-weight: 450;
+    letter-spacing: 0.08em;
+  }
+
+  .nav-title::before {
+    content: "~/";
+    margin-right: 0.15em;
+    color: var(--accent);
+  }
+
+  .theme-toggle {
+    justify-self: end;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .theme-toggle:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  @media (max-width: 650px) {
+    .site-header {
+      padding-block: 1.1rem;
+    }
+
+    .brand-logo {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+  }
+
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

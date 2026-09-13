@@ -1,0 +1,31 @@
+---
+title: "Running Our First Pipeline"
+description: "The moment foundation stops being abstract: a true end-to-end run through the still-young core, and the honest list of shortcuts involved."
+date: "2026-08-22"
+author: "harris"
+week: 34
+milestone: "M1"
+status: "published"
+tags:
+  - Pipeline
+  - Foundation
+  - Milestone
+---
+
+Infrastructure only becomes real when something runs through it. This week I forced that moment: a hand-written, two-step pipeline executed end to end through code that had never been asked to touch a real object before.
+
+### The run
+
+Two steps, one feeding the other. Step A produced an artifact; step B consumed it. On this scale nothing is impressive — but every seam between the data model, the API skeleton, and early execution code got exercised for the first time.
+
+### What the run exposed
+
+The honest findings of the week:
+
+- The model was right. Nothing needed renaming under pressure.
+- The API skeleton was right-sized. No endpoint had to bend.
+- Execution was embedded in test code, where it belonged, and it showed where the real engine needs to live: the runtime deserves to be its own system, not a library call.
+
+### The point
+
+The value is not the pipeline. It is that the foundation's pieces were validated by a run before any of it became sacred. A first pipeline exists, it ran, and the team now knows which abstractions earned their place.

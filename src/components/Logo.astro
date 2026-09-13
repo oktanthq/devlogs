@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<img class:list={["logo-image", className]} src="/oktant-3D.png" alt="Oktant" />
+
+<style>
+  .logo-image {
+    display: block;
+    width: 4.25rem;
+    height: 4.25rem;
+    object-fit: contain;
+  }
+</style>

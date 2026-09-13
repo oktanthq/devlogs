@@ -1,0 +1,32 @@
+---
+title: "Runtime Architecture"
+description: "Mapping execution requirements to runtime components: the plan, the scheduler, supervision, and where each decision gets made."
+date: "2026-09-05"
+author: "harris"
+week: 36
+milestone: "M3"
+status: "published"
+tags:
+  - Runtime
+  - Execution
+  - Architecture
+---
+
+The runtime architecture arrived at its current shape over the last two weeks, and this week I wrote it down properly. Not as a sales artifact — as a contract the rest of the team can build against.
+
+### The components
+
+- **Planner** — turns a resolved project into an execution plan: a directed structure of steps with explicit inputs and expected outputs.
+- **Scheduler** — decides what runs when, subject to declared capacity and ordering constraints.
+- **Supervisor** — owns step lifecycle: start, monitor, terminate on failure, apply policy.
+- **Collector** — gathers artifacts and outcomes into a run record.
+
+### The principle of the split
+
+Planner treats logic. Scheduler treats economics. Supervisor treats physics. Collector treats history. Mixing any two is how runtimes become impossible to reason about, so the boundaries are strict.
+
+### Two decisions worth recording
+
+First, plans are materialized before execution. We don't stream work in — the whole plan exists up front, which makes retries and partial failures tractable. Second, supervision is a first-class component rather than something scattered through execute code. Every step has an unambiguous owner at every moment.
+
+The design is deliberately boring. The interesting part starts next week, when these components become code with the pipeline implementation.

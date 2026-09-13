@@ -1,0 +1,106 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { developers } from "../data/developers";
+import { formatDate } from "../utils/format";
+
+export interface Props {
+  entry: CollectionEntry<"devlogs">;
+  prev?: { slug: string; title: string };
+  next?: { slug: string; title: string };
+}
+
+const { entry } = Astro.props;
+
+const { Content } = await render(entry);
+
+const { title, description, date, author } = entry.data;
+const developer = developers.find((dev) => dev.slug === author);
+
+const pageTitle = `${title} — OKTANT`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={description}
+  path={`/devlogs/${entry.id}/`}
+  ogType="article"
+>
+  <nav class="back-bar" aria-label="Back to devlogs">
+    <div class="container">
+      <a class="back-link" href="/">
+        <svg class="back-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M10 3.5L5.5 8l4.5 4.5" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>dev_logs</span>
+      </a>
+    </div>
+  </nav>
+
+  <article class="devlog container">
+    <header class="devlog-header">
+      <h1 class="devlog-title">{title}</h1>
+      <p class="devlog-meta">
+        <span>{formatDate(date)}</span>
+        {developer && <span>{developer.name}</span>}
+      </p>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+  </article>
+</BaseLayout>
+
+<style>
+  .back-bar {
+    padding-top: var(--space-4);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: color 0.15s ease;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .back-icon {
+    width: 13px;
+    height: 13px;
+  }
+
+  .devlog {
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  .devlog-header {
+    margin-bottom: var(--space-6);
+  }
+
+  .devlog-title {
+    font-size: clamp(1.9rem, 5vw, 2.75rem);
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    max-width: 24ch;
+  }
+
+  .devlog-meta {
+    margin-top: var(--space-3);
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-faint);
+  }
+
+</style>

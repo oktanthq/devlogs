@@ -1,0 +1,31 @@
+---
+title: "The Internal Representation"
+description: "Designing the IR that sits between the parsed source and the execution engine: typed, analyzable, and stable under change."
+date: "2026-08-29"
+author: "harris"
+week: 35
+milestone: "M2"
+status: "published"
+tags:
+  - Core
+  - IR
+  - Architecture
+---
+
+Between the source a developer writes and the machine that executes it, there is a layer where Oktant actually gets to think. That layer is the internal representation, and this week it got a design.
+
+### Why an IR exists
+
+The IR is the answer to a simple problem: the parser output is shaped by how developers write, but the engine needs things shaped by how work executes. Rather than make either side compromise, there is a transformation boundary between them.
+
+### What the IR must hold
+
+- A **typed work graph** with explicit nodes and edges — no stringly-typed anything.
+- **Data dependencies** stated as flow, separate from scheduling concerns.
+- **Metadata** riding alongside: identity, provenance to source positions, and version.
+
+### The discipline
+
+The rules were written before the code: the IR is immutable once produced, transformations are functions that return new graphs rather than mutating, and every node knows its type. None of this is fashionable — it is how you keep an intermediate layer from rotting into a dumping ground.
+
+With the IR specified, the core has both halves of its spine: the AST from Abdullah's parser in, the IR to the runtime out.

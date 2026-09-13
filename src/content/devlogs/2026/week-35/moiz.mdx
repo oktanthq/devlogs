@@ -1,0 +1,32 @@
+---
+title: "Analysis Primitives"
+description: "Starting to give Oktant judgment: static analysis over the work graph, dependency health, and the checks that run before anything executes."
+date: "2026-08-29"
+author: "moiz"
+week: 35
+milestone: "M2"
+status: "published"
+tags:
+  - Core
+  - Analysis
+  - Primitives
+---
+
+A platform that analyzes but cannot act is a library. A platform that acts but never analyzes is a script. M2 is where Oktant learns to look before it leaps.
+
+### The analysis boundary
+
+Analysis reads the IR and writes conclusions. This week formalized that boundary: analyzers are pure functions from the work graph to a list of findings. They cannot execute, spawn, or reach for the network. That purity is what makes them cheap to run and safe to trust.
+
+### First analyzers
+
+Two primitive checks landed:
+
+- **Cycles** — a work graph with a cycle is a pipeline that will hang. The cycle detector reports the exact loop, positioned back to source.
+- **Missing inputs** — a step that declares an input nothing produces. Pathological in a good compiler, impossible here to forget now.
+
+### The posture
+
+Findings are typed: error, warning, note. The engine treats them strictly because the analytics, not the tools, are the point. Nothing executes until the cheap checks pass — this is analysis acting as the gatekeeper, which is the role we want it to grow into.
+
+The primitives are deliberately small. Their job is to prove the seam works; the interesting analyzers come after the runtime exists to be analyzed.

@@ -1,0 +1,31 @@
+---
+title: "Working on the Runtime Infrastructure"
+description: "The substrate beneath execution: process supervision, resource limits, and the isolation boundary between steps."
+date: "2026-09-12"
+author: "moiz"
+week: 37
+milestone: "M3"
+status: "published"
+tags:
+  - Runtime
+  - Infrastructure
+  - Isolation
+---
+
+The runtime needs to be the boring part of the platform. This week was about making process lifecycle, resource limits, and isolation real enough that Harris and I can stop thinking about them and start worrying about execution semantics.
+
+### Process supervision
+
+Every step in a plan now runs inside a supervised process. The supervisor's job is to enforce the plan's intent: if a step outlives its budget, it gets a termination signal, a grace period, and then a kill. The state machine here is small but insists on being correct — there is no "mostly dead" state in supervision.
+
+### Resource limits
+
+A step declares what it needs, and the runtime enforces it. We wired CPU and memory limits into the execution stage so a runaway loop in one pipeline cannot take down the node it runs on. The enforcement point lives in the runtime, which means it applies to every plan with no opt-out by accident.
+
+### The isolation boundary
+
+Steps share nothing by default. We killed the inherited-environment shortcut this week: each step gets an explicit, minimal environment derived from its plan entry, not from wherever the process happened to spawn. It was a small change to implement and a large change in trust.
+
+### What's next
+
+Next week I'm taking the isolation boundary one level further with the sandbox, which affects how steps access the filesystem. After that, the runtime should be quiet enough to leave alone for a while — which is exactly how I like infrastructure.
