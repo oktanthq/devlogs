@@ -1,0 +1,40 @@
+---
+title: "Codehound Starts, and the Frontend Gets Auth"
+description: "We started Codehound, our code intelligence engine, and moved the frontend onto Oktant branding and Supabase authentication."
+date: "2026-10-05"
+author: "abdullah"
+week: 3
+milestone: "M2"
+status: "published"
+tags: ["codehound", "frontend", "supabase", "github-app"]
+---
+
+## Cleaning up the frontend
+
+We started the week by undoing most of last week's workspace styling. The preview screens were removed and replaced with a smaller catalog. We also added the Oktant icon and logo assets.
+
+By the weekend the landing page had the Oktant branding, a design system on Tailwind v4 and shadcn components, a theme toggle, and loading, error, and not-found states. It now describes the three pillars: Build, Deploy, Observe.
+
+## Authentication
+
+Email sign-up and sign-in now run on **Supabase**. We restructured the routes into marketing, auth, and app groups, and added an app shell for signed-in users. In Linear we closed Google sign-in, GitHub account connection, and session handling.
+
+## Codehound
+
+The bigger news is Codehound. It is the code intelligence engine behind the Build pillar: it ingests repositories, analyzes them, and builds a model of the code that reviews and other tools can query. We created the Codehound project in Linear with a full backlog, OKT-21 through OKT-120, split into milestones: GitHub integration, code analysis, retrieval, the code model, an MCP server, pull request review, change suggestions, and vulnerability assessment.
+
+We chose **TypeScript on Node.js**. The GitHub App and webhook APIs map cleanly onto Node, and MCP is JSON-RPC, which fits a typed Node service.
+
+This week covered the whole GitHub integration milestone and the start of analysis:
+
+- GitHub App JWT auth and installation tokens
+- Repository authorization, discovery, and selection
+- Cloning, branch and commit tracking, webhooks, and incremental ingestion
+- File and language detection, version metadata, and retry on ingestion failure
+- A language-agnostic analysis design, an AST pipeline, and symbol, import, call graph, and type relationship extraction
+
+Everything sits behind interfaces with in-memory implementations, so the tests run without a real GitHub App.
+
+## Next week
+
+Finish the analysis milestone in Codehound and give signed-in users a real dashboard and project pages.
