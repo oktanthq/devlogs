@@ -1,0 +1,45 @@
+---
+title: "Dashboard, Projects, and Retrieval"
+description: "The frontend got a dashboard, a create-project wizard, and project pages. Codehound finished analysis and added retrieval and the first code model."
+date: "2026-10-12"
+author: "abdullah"
+week: 4
+milestone: "M2"
+status: "published"
+tags: ["frontend", "codehound", "retrieval", "cim"]
+---
+
+## Frontend
+
+This was a team week on the frontend. Harris added the dashboard page and layout components and simplified the navigation. Moiz added a display name to sign-up, a profile combobox, and the settings dialog. We added a Supabase user details context so pages can read the signed-in user.
+
+On Saturday most of the project surface went in at once:
+
+- A card-based create-project wizard
+- A project list and section pages for analysis, pull requests, deployments, observability, insights, and settings
+- Detail pages for pull requests, deployments, and services
+- Sample data so every page has something to show
+
+All of this still runs on sample data. In Linear we closed the authenticated dashboard and repository selection.
+
+## Codehound
+
+Codehound finished the analysis milestone: API and endpoint extraction, data flow, component and module detection, cross-file relationships, result storage, and initial support for TypeScript and JavaScript with React, Express, and Nest hints.
+
+Then retrieval:
+
+- Code-aware chunking and an embedding pipeline, with a local hashing embedder for now
+- In-memory vector storage
+- Semantic search, BM25, and hybrid retrieval using reciprocal rank fusion
+- Symbol-aware retrieval, metadata filters, reranking, incremental index updates
+- A small evaluation set that scores recall and mean reciprocal rank
+
+On Sunday we started the Code Intelligence Model (CIM): its architecture, an ontology of entities and relations, persistent storage, incremental updates, a query layer, and the dependency graph, call graph, component, architecture, and data-flow models.
+
+## Honest note
+
+The retrieval and code model are real code with tests, but they run on local, in-memory implementations. There is no hosted embedding service or vector database behind them yet.
+
+## Next week
+
+Finish the code model and build the MCP server.
