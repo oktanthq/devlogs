@@ -1,0 +1,36 @@
+---
+title: "MCP Server and Pull Request Review"
+description: "Codehound finished its code model, gained an MCP server, and started reviewing pull requests."
+date: "2026-10-19"
+author: "abdullah"
+week: 5
+milestone: "M2"
+status: "published"
+tags: ["codehound", "mcp", "pr-review"]
+---
+
+## Where the time went
+
+All of this week's commits were in Codehound. The frontend did not change.
+
+## Finishing the code model
+
+We added business-rule extraction (from `validate`, `assert`, `ensure`, `check`, and `guard` style symbols), links between code and those rules, and versioning for the model.
+
+## MCP server
+
+Codehound now has an MCP server. It speaks JSON-RPC 2.0 over stdio and exposes `codehound_*` tools for project discovery, code retrieval, dependency and call graph queries, components and architecture, business rules, impact analysis, and a tool that combines retrieval with the code model. Responses include a summary, structured data, citations, and hints, so an editor or coding tool can use them directly. We added a test that walks the MCP handshake end to end.
+
+## Pull request review
+
+The second half of the week went into reviewing pull requests:
+
+- Ingesting and syncing pull requests from GitHub
+- Parsing diffs into hunks and changed lines
+- Pulling context for the changed code and asking the code model what a change affects
+- Detectors for code smells, bad practices, architecture violations, business-rule violations, regression risk, and security risks
+- Generating review comments and a review summary
+
+## Next week
+
+Severity classification, publishing reviews back to GitHub, and starting on change suggestions.
