@@ -1,0 +1,32 @@
+---
+title: "Change Suggestions and Security Analysis"
+description: "Codehound learned to publish reviews, suggest code changes, and run a security scanning pipeline. CI Forge got a README and a proper backlog."
+date: "2026-10-26"
+author: "abdullah"
+week: 6
+milestone: "M2"
+status: "published"
+tags: ["codehound", "security", "ciforge"]
+---
+
+## Reviews reach GitHub
+
+Codehound now classifies review severity and can publish its review to a GitHub pull request through the App installation. High or critical findings request changes; a clean review approves.
+
+## Change suggestions
+
+We built a change suggestion pipeline. It maps an issue or finding onto code, generates single-file and multi-file edits, and emits unified diffs. Guards stop a suggestion from dropping exports that something still depends on, from importing tests into application code, or from deleting business-rule checks. It also proposes tests for changed modules and validates the result. Passing suggestions get attached to the matching review comment.
+
+These are local rewrites, not a hosted generation service.
+
+## Security analysis
+
+Late in the week we started the vulnerability assessment milestone: a security architecture, a SAST rules engine, dependency vulnerability scanning, secret detection, authentication and authorization checks, data-flow security analysis, injection paths, insecure API usage, security business rules, and tracing across components.
+
+## CI Forge
+
+CI Forge got some attention for the first time in a while. It now has a top-level README, and the Go module path was fixed to `github.com/oktanthq/ciforge`. We also created a proper CI Forge backlog in Linear: a license, tests for GitLab and CircleCI, a CI workflow, the Jenkins provider, a CircleCI example, and a shared provider interface.
+
+## Next week
+
+Finish the security milestone, merge Codehound's `dev` branch into `main`, and get CI Forge tested.
