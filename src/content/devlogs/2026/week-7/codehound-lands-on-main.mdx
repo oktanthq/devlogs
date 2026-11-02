@@ -1,0 +1,42 @@
+---
+title: "Codehound Lands on Main"
+description: "We finished Codehound's planned milestones and merged them, tested CI Forge, recorded the frontend backlog, and started Platform Core."
+date: "2026-11-02"
+author: "abdullah"
+week: 7
+milestone: "M2"
+status: "published"
+tags: ["codehound", "ciforge", "core", "planning"]
+---
+
+## Codehound
+
+We finished vulnerability assessment with severity classification, remediation suggestions, security findings inside pull request reviews, and an evaluation benchmark. On Wednesday we merged `dev` into `main`, which covers OKT-21 through OKT-120. OKT-30 was a duplicate of OKT-31 and was skipped.
+
+Going back over the code turned up real problems, which we filed as OKT-144 to OKT-152:
+
+- `yarn.lock` and `pnpm-lock.yaml` were not parsed in dependency scanning
+- Version ranges with `||`, `^`, and `~` were not matched
+- Dependency remediation wrote a comment into `package.json`, which made it invalid JSON
+- `sast.command-exec` flagged `RegExp.exec` calls
+- The data-flow scanner ignored the propagated taint set
+- Pull request files and commits were not paginated
+- Retrieved code context was not used in reviews
+
+The lockfile fix merged on Thursday. The rest were fixed by Sunday and merged early the next week.
+
+## CI Forge
+
+CI Forge now has an MIT license, test suites for the GitLab and CircleCI providers, fixes to CircleCI request paths and query strings, and a GitHub Actions workflow that builds, tests, and lints. That merged to `main` on Thursday.
+
+## The frontend backlog
+
+The frontend had grown faster than its Linear board. We recorded what was already built (Supabase auth, the landing page, the app shell, the settings dialog, the projects wizard UI, and the project section pages) and filed what is missing: committed schema and RLS, real GitHub calls in the wizard, persisting projects, putting sample data behind a flag, triggering Codehound from the Analysis page, CI, and the Deploy and Observe wiring.
+
+## Platform Core
+
+We created the `core` repository on Friday. Core will be the single backend the frontend talks to for anything that needs privileges. Nothing is in it yet beyond the first commit.
+
+## Next week
+
+Scaffold Core in Go and start on organizations in the frontend.
