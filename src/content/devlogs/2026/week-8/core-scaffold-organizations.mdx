@@ -1,0 +1,32 @@
+---
+title: "Platform Core Scaffolded, Organizations Begin"
+description: "Core got a Go scaffold with health checks and a project API. Codehound's fixes merged, and the frontend started on organizations."
+date: "2026-11-09"
+author: "abdullah"
+week: 8
+milestone: "M3"
+status: "published"
+tags: ["core", "go", "codehound", "frontend", "organizations"]
+---
+
+## Platform Core
+
+Core is written in **Go**, using the standard library's `net/http`. On Monday we added the module and tooling, environment configuration, an in-memory project store behind an interface, health and readiness endpoints with a small project API, graceful shutdown on signal, a container image, CI, and a README.
+
+We also wrote the Core backlog in Linear, OKT-171 to OKT-198. It covers Supabase JWT verification, migrations, RLS, organizations and members, GitHub connect, repositories, projects, analysis runs, and later deployments, monitored services, and an event bus. Only the scaffold (OKT-172) is done. The rest is backlog, and a few architecture questions are still open.
+
+## Codehound
+
+The fixes filed last week merged early Tuesday: pagination, version ranges, the `package.json` remediation bug, the `RegExp.exec` false positive, taint propagation, code context in reviews, and a webhook server entry point with live GitHub tests. Test fixtures were updated to match the changed interfaces.
+
+## CI Forge
+
+The CI Forge issues for GitLab tests, CircleCI tests, and the CI workflow were closed in Linear. The work itself merged last week.
+
+## Frontend: organizations
+
+At the end of the week we started on organizations: a typed organization client, which still runs on mock data, persisting the selected organization, an organization context for the signed-in app, and a dialog for creating a team organization.
+
+## Next week
+
+The org switcher, members, and integrations in the frontend, and getting Core to do real work against Supabase.
