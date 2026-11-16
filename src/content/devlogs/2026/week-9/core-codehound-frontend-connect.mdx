@@ -1,0 +1,40 @@
+---
+title: "Core, Codehound, and the Frontend Connect"
+description: "The frontend got organizations, settings, and CI. Core started persisting to Supabase and queueing analyses, and Codehound got a worker to run them."
+date: "2026-11-16"
+author: "abdullah"
+week: 9
+milestone: "M3"
+status: "published"
+tags: ["frontend", "core", "codehound", "supabase", "pgmq"]
+---
+
+## Frontend
+
+Most of the week went into the frontend:
+
+- An org switcher in the top bar, project lists scoped to the current organization, and member settings hidden on personal organizations (merged as PR #2)
+- A CI workflow for lint, typecheck, format, and build
+- A members and invites client, a members page in org settings, and an invite accept page at `/invite`
+- An extensible settings integrations registry, GitHub connect in integrations, and GitHub linking on the profile
+- Pending invites shown after login
+- Sample project data moved behind a demo flag, `NEXT_PUBLIC_OKTANT_DEMO_MODE`, with routes, environment variables, and demo mode documented in the README
+- A batch of small UI fixes, and a deployment config
+
+## Core and Codehound talk through a queue
+
+On Saturday Core and Codehound were connected for the first time.
+
+**Core** now verifies Supabase JWTs and persists organizations through Postgres. It mints GitHub App installation tokens, connects GitHub for an organization, creates org-scoped projects, and queues analyses. It also has Supabase migrations for platform tables, analysis tables, RLS, and a pgmq queue.
+
+**Codehound** got a worker. It reads `analysis.requested` jobs from the `oktant_analysis` queue, clones the repository at the requested commit with the short-lived token from the job, runs the security pipeline, and writes runs, findings, and summaries back to Postgres. It also has a Docker image.
+
+We wrote the message format down as a queue contract in both repositories, so neither side changes it alone. Core's first version did not match Codehound's contract exactly, which we fixed the same night.
+
+## What is still missing
+
+Team organizations and invites have screens, but Core has no endpoints for them, so they are not usable yet. Deploy and Observe are still UI only.
+
+## Next week
+
+Point the frontend at Core for real: project creation, analysis runs, and live status.
