@@ -1,0 +1,36 @@
+---
+title: "Running an Analysis from the Browser"
+description: "The frontend now creates projects through Core and runs Codehound analyses with live status."
+date: "2026-11-23"
+author: "abdullah"
+week: 10
+milestone: "M3"
+status: "published"
+tags: ["frontend", "core", "codehound", "realtime"]
+---
+
+## End to end
+
+This week the Build pillar worked from start to finish for the first time. On Tuesday the frontend got:
+
+- A Core HTTP client and generated Supabase types
+- The create-project wizard wired to Core, with the mock GitHub calls replaced by real ones
+- Real organization and integration clients in place of the mocks
+- Analysis runs: clicking **Run analysis** queues a job through Core, and the page follows the run through Supabase Realtime until Codehound writes the findings
+- Membership checks and a proxy matcher for dashboard routes
+- A Next.js upgrade, and Vitest for tests
+- A local setup guide for running the frontend, Core, and the worker together
+
+In Linear that closed real GitHub calls in the wizard, triggering Codehound from the Analysis page, and the org switcher.
+
+## The rest of the screens
+
+On Thursday we finished the remaining project screens against Supabase tables: pull requests, deployments, observability, and insights. On Friday we fixed the sidebar so it stays full height on long pages.
+
+## Honest status
+
+Deployments and observability read stored rows. Nothing deploys and nothing is monitored yet. Saving project settings and the slug check (OKT-161) are still in progress, and team invites still need Core endpoints.
+
+## Next week
+
+Write the platform down properly in a docs site and catch up on these logs.
