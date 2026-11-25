@@ -1,0 +1,35 @@
+---
+title: "A Docs Site"
+description: "We started docs.oktant.tech, a Starlight site that explains how Oktant fits together and what actually works."
+date: "2026-11-25"
+author: "abdullah"
+week: 11
+milestone: "M3"
+status: "published"
+tags: ["docs", "astro", "process"]
+---
+
+## Why now
+
+Oktant now has four repositories that depend on each other: the frontend, Core, Codehound, and CI Forge. Each has a good README, but there was no single place that explains how they connect, how to run them together, or which features are real. That gap was starting to slow us down.
+
+## What we built
+
+We created the `docs` repository, an **Astro Starlight** site, the same framework family as this devlog. It is static, so it can go on any host. It has:
+
+- An overview of the three pillars and the repositories
+- An architecture page: the frontend, Core in Go, the Codehound worker reading the `oktant_analysis` pgmq queue, and Supabase for auth, the database, and Realtime
+- Local setup for Core, Codehound, and the frontend, plus a guide to running the whole stack
+- The analysis queue contract and the Core HTTP API
+- Pages for Codehound's design, CI Forge, and the frontend's pages and demo mode
+- A **What is built** page that separates working features from planned ones
+
+That last page matters most to us. Deploy and Observe are not wired up, team invites need Core endpoints, and Codehound's retrieval still runs in memory. The docs say so.
+
+## Product code
+
+No product code landed in the other repositories this week so far. The site is not deployed yet either.
+
+## Next
+
+Deploy the docs, then get back to OKT-161 (saving projects and settings to Supabase) and the Core endpoints for team organizations.
